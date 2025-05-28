@@ -18,7 +18,7 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
 
     List<Empresa> findByNitAndFlotaActiva(Long nit);
 
-    List<Empresa> findByFlotaActiva();
+    List<Empresa> findByFlotaActivaTrue();
 
     boolean existsByIdAndFlotaActivaTrue(Long id);
 

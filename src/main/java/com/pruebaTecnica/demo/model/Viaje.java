@@ -30,7 +30,7 @@ public class Viaje {
     private String destino;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_municion", nullable = false)
+    @JoinColumn(name = "id_empresa", nullable = false)
     private Empresa empresa;
 
     @JsonCreator

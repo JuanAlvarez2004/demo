@@ -39,7 +39,7 @@ public class ServicioEmpresa {
     //Read
     @Transactional(readOnly = true)
     public List<Empresa> getEmpresas() {
-        return empresaRepository.findByFlotaActiva();
+        return empresaRepository.findByFlotaActivaTrue();
     }
 
     //Update
