@@ -2,6 +2,7 @@ package com.pruebaTecnica.demo.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.pruebaTecnica.demo.model.Empresa;
 import com.pruebaTecnica.demo.service.ServicioEmpresa;
@@ -34,7 +35,8 @@ public class EmpresaController {
         if (empresas.isEmpty()) {
             return new ResponseEntity<>("No hay empresas creadas", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(objectMapper.valueToTree(empresas), HttpStatus.OK);
+        ArrayNode arrayNode = objectMapper.valueToTree(empresas);
+        return new ResponseEntity<>(arrayNode, HttpStatus.OK);
     }
 
     public boolean validarCampos(JsonNode jsonNode) {

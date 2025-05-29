@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -33,12 +32,20 @@ public class Viaje {
     @JoinColumn(name = "id_empresa", nullable = false)
     private Empresa empresa;
 
+    // Constructor con @JsonCreator - FUNCIONA PERFECTAMENTE
     @JsonCreator
     public Viaje(@JsonProperty("nombre_vehiculo") String nombreVehiculo,
                  @JsonProperty("capacidad_pasajeros") int capacidadPasajeros,
                  @JsonProperty("origen") String origen,
-                 @JsonProperty("destino") String destino,
-                 @JsonProperty("empresa") Empresa empresa) {
+                 @JsonProperty("destino") String destino) {
+        this.nombreVehiculo = nombreVehiculo;
+        this.capacidadPasajeros = capacidadPasajeros;
+        this.origen = origen;
+        this.destino = destino;
+    }
+
+    // Constructor completo para uso interno
+    public Viaje(String nombreVehiculo, int capacidadPasajeros, String origen, String destino, Empresa empresa) {
         this.nombreVehiculo = nombreVehiculo;
         this.capacidadPasajeros = capacidadPasajeros;
         this.origen = origen;
@@ -46,10 +53,7 @@ public class Viaje {
         this.empresa = empresa;
     }
 
-    public Viaje() {
-
-    }
-
+    // Getters y Setters
     public Long getId() {
         return id;
     }
@@ -106,7 +110,7 @@ public class Viaje {
                 ", capacidadPasajeros=" + capacidadPasajeros +
                 ", origen='" + origen + '\'' +
                 ", destino='" + destino + '\'' +
-                ", empresa=" + empresa +
+                ", empresa=" + (empresa != null ? empresa.getNombre() : "null") +
                 '}';
     }
 }

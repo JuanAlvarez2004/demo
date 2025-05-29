@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServicioViaje {
@@ -34,11 +35,21 @@ public class ServicioViaje {
         return viajeRepository.findAll();
     }
 
+    //Read by ID
+    @Transactional(readOnly = true)
+    public Optional<Viaje> getViajeById(Long id) {
+        return viajeRepository.findById(id);
+    }
+
     //Update
     @Transactional
-    public Viaje actualizarViaje(Viaje viajeNuevo, Viaje viajeViejo) {
-        viajeNuevo.setId(viajeViejo.getId());
-        return viajeRepository.save(viajeNuevo);
+    public Viaje actualizarViaje(Viaje viajeNuevo, Viaje viajeViejo) throws Exception {
+        if (viajeNuevo != null && empresaRepository.findByIdAndFlotaActivaTrue(viajeNuevo.getEmpresa().getId()).isPresent()) {
+            viajeNuevo.setId(viajeViejo.getId());
+            return viajeRepository.save(viajeNuevo);
+        } else {
+            throw new Exception("El viaje no puede ser nulo y la empresa debe existir y estar activa");
+        }
     }
 
     //Delete
@@ -46,7 +57,7 @@ public class ServicioViaje {
     @Transactional
     public Viaje eliminarViaje(Viaje viaje) throws Exception {
         if (empresaRepository.existsByIdAndFlotaActivaTrue(viaje.getEmpresa().getId())) {
-            throw new Exception("Solo puede eliminar viajes de flotas que no esten activas");
+            throw new Exception("Solo puede eliminar viajes de empresas con flota inactiva");
         }
         viajeRepository.delete(viaje);
         return viaje;
