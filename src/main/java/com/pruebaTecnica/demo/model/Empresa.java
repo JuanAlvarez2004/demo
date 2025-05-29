@@ -37,6 +37,10 @@ public class Empresa {
         this.flotaActiva = true;
     }
 
+    public Empresa() {
+
+    }
+
     public Long getId() {
         return id;
     }

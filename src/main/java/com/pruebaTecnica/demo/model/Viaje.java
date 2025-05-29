@@ -34,8 +34,8 @@ public class Viaje {
     private Empresa empresa;
 
     @JsonCreator
-    public Viaje(@JsonProperty("nombreVehiculo") String nombreVehiculo,
-                 @JsonProperty("capacidadPasajeros") int capacidadPasajeros,
+    public Viaje(@JsonProperty("nombre_vehiculo") String nombreVehiculo,
+                 @JsonProperty("capacidad_pasajeros") int capacidadPasajeros,
                  @JsonProperty("origen") String origen,
                  @JsonProperty("destino") String destino,
                  @JsonProperty("empresa") Empresa empresa) {
@@ -44,6 +44,10 @@ public class Viaje {
         this.origen = origen;
         this.destino = destino;
         this.empresa = empresa;
+    }
+
+    public Viaje() {
+
     }
 
     public Long getId() {

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServicioEmpresa {
@@ -17,9 +18,9 @@ public class ServicioEmpresa {
     // CRUD
     //Create
     @Transactional
-    public void crearEmpresa(Empresa emp) throws Exception{
+    public Empresa crearEmpresa(Empresa emp) throws Exception{
         if (emp != null && empresaRepository.findByNit(emp.getNit()).isEmpty()) {
-            empresaRepository.save(emp);
+            return empresaRepository.save(emp);
         } else {
             throw new Exception("La empresa no puede ser nula o no puede tener el mismo NIT que otra empresa existente");
         }
@@ -53,6 +54,11 @@ public class ServicioEmpresa {
         } else {
             throw new Exception("No se puede actualizar una empresa con el NIT de una empresa existente");
         }
+    }
+
+    @Transactional
+    public Optional<Empresa> getEmpresaId(Long id) {
+        return empresaRepository.findById(id);
     }
 
 }

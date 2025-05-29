@@ -20,9 +20,9 @@ public class ServicioViaje {
     //CRUD
     //Create
     @Transactional
-    public void crearViaje(Viaje viaje) throws Exception {
+    public Viaje crearViaje(Viaje viaje) throws Exception {
         if (viaje != null && empresaRepository.findByIdAndFlotaActivaTrue(viaje.getEmpresa().getId()).isPresent()) {
-            viajeRepository.save(viaje);
+            return viajeRepository.save(viaje);
         } else {
             throw new Exception("El viaje no puede ser nulo y la flota debe existir y estar activa");
         }
